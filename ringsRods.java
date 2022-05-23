@@ -20,34 +20,26 @@ Constraints:
     rings[i] where i is odd is a digit from '0' to '9' (0-indexed).
 */
 class Solution {
-  //this solution is over-engineered because it counts the total of each color ring on each rod, where it need only confirm it exists
     public int countPoints(String rings) {
-        Map<Integer,Map<Character,Integer>> rods = new HashMap<Integer,Map<Character,Integer>>();
+        Map<Integer,Set<Character>> rods = new HashMap<Integer,Set<Character>>();
         char color;
         int rod;
         for(int i = 0; i < rings.length(); i += 2) {
             color = rings.charAt(i);
             rod = rings.charAt(i+1)-48;
-            //if this rod not in map, add it and then add the (color,1) pair
+            //if this rod not in map, add it and then add the color to the rod set
             if(rods.get(rod) == null) {
-                rods.put(rod, new HashMap<Character,Integer>());
-                rods.get(rod).put(color,1);
+                rods.put(rod, new TreeSet<Character>());
+                rods.get(rod).add(color);
             }
-            //otherwise increase the count of this color ring in the map
+            //otherwise add color to ring in the map
             else {
-                //if color not exists on this rod then add the (color,1) pair
-                if(rods.get(rod).get(color) == null) {
-                    rods.get(rod).put(color,1);
-                } 
-                //otherwise simply update the count
-                else {
-                    rods.get(rod).put(color, rods.get(rod).get(color)+1);
-                }
+                rods.get(rod).add(color);
             }
         }
         int count = 0;
         for(int set : rods.keySet()) {
-            if(rods.get(set).get('R') != null && rods.get(set).get('G') != null && rods.get(set).get('B') != null) count++;
+            if(rods.get(set).contains('R') && rods.get(set).contains('G') && rods.get(set).contains('B')) count++;
         }
         return count;
     }
