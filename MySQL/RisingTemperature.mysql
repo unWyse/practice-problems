@@ -25,5 +25,5 @@
 SELECT Today.id
 FROM (SELECT * FROM Weather ORDER BY recordDate) AS Today
 JOIN (SELECT * FROM Weather ORDER BY recordDate) AS Yesterday
-ON Today.id - 1 = Yesterday.id
+ON DATE_SUB(Today.recordDate, INTERVAL 1 DAY) = Yesterday.recordDate
 WHERE Today.temperature > Yesterday.temperature;
