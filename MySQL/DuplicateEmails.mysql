@@ -1,0 +1,28 @@
+
+# Write an SQL query to report all the duplicate emails.
+# Return the result table in any order.
+
+# Table: Person
+# +-------------+---------+
+# | Column Name | Type    |
+# +-------------+---------+
+# | id          | int     |
+# | email       | varchar |
+# +-------------+---------+
+# id is the primary key column for this table.
+# Each row of this table contains an email. The emails will not contain uppercase letters.
+
+# Person table:
+# +----+---------+
+# | id | email   |
+# +----+---------+
+# | 1  | a@b.com |
+# | 2  | c@d.com |
+# | 3  | a@b.com |
+# +----+---------+
+
+SELECT DISTINCT E1.email AS Email
+FROM Person as E1
+JOIN Person as E2
+ON E1.email = E2.email
+AND E1.id <> E2.id;
